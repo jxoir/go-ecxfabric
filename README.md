@@ -2,7 +2,7 @@
 
 An **UNOFFICIAL** Go SDK for integrating with the Equinix ECX API v3. Tested with Go 1.10+
 
-:warning: WARNING: This SDK is **NOT official** What foes this mean?
+:warning: WARNING: This SDK is **NOT official** What does this mean?
 
 * There is no formal Equinix [support] (https://developer.equinix.com) for this SDK at this point
 * Bugs may or may not get fixed
