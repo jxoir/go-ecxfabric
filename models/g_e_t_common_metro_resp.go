@@ -6,17 +6,50 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
 // GETCommonMetroResp g e t common metro resp
 // swagger:model GETCommonMetroResp
-type GETCommonMetroResp struct {
+type GETCommonMetroResp []*GETCommonMetroRespItems0
+
+// Validate validates this g e t common metro resp
+func (m GETCommonMetroResp) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	for i := 0; i < len(m); i++ {
+		if swag.IsZero(m[i]) { // not required
+			continue
+		}
+
+		if m[i] != nil {
+			if err := m[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName(strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+// GETCommonMetroRespItems0 g e t common metro resp items0
+// swagger:model GETCommonMetroRespItems0
+type GETCommonMetroRespItems0 struct {
 
 	// cloud reach
-	CloudReach interface{} `json:"cloudReach,omitempty"`
+	CloudReach []string `json:"cloudReach"`
 
 	// code
 	Code string `json:"code,omitempty"`
@@ -28,13 +61,13 @@ type GETCommonMetroResp struct {
 	Region string `json:"region,omitempty"`
 }
 
-// Validate validates this g e t common metro resp
-func (m *GETCommonMetroResp) Validate(formats strfmt.Registry) error {
+// Validate validates this g e t common metro resp items0
+func (m *GETCommonMetroRespItems0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *GETCommonMetroResp) MarshalBinary() ([]byte, error) {
+func (m *GETCommonMetroRespItems0) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -42,8 +75,8 @@ func (m *GETCommonMetroResp) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *GETCommonMetroResp) UnmarshalBinary(b []byte) error {
-	var res GETCommonMetroResp
+func (m *GETCommonMetroRespItems0) UnmarshalBinary(b []byte) error {
+	var res GETCommonMetroRespItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
