@@ -7,6 +7,7 @@ An **UNOFFICIAL** Go SDK for integrating with the Equinix ECX API v3. Tested wit
 * There is no formal Equinix [support] (https://developer.equinix.com) for this SDK at this point
 * Bugs may or may not get fixed
 * Not all SDK features may be implemented and implemented features may be buggy or incorrect
+* Only implements Buyer API _for now_
 
 #### Ok, so why this?
  
