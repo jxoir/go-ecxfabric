@@ -4260,7 +4260,7 @@
 					"example": "MB"
 				},
 				"equinixBgpPeeringIp": {
-					"type": "number",
+					"type": "string",
 					"example": "67.223.180.58"
 				},
 				"dedicatedSubscriptionName": {

@@ -31,7 +31,7 @@ type RIConnectorOptionalNetwork struct {
 	DedicatedSubscriptionUUID string `json:"dedicatedSubscriptionUuid,omitempty"`
 
 	// equinix bgp peering Ip
-	EquinixBgpPeeringIP float64 `json:"equinixBgpPeeringIp,omitempty"`
+	EquinixBgpPeeringIP string `json:"equinixBgpPeeringIp,omitempty"`
 
 	// is user provided peering Ip
 	IsUserProvidedPeeringIP bool `json:"isUserProvidedPeeringIp,omitempty"`
