@@ -159,7 +159,7 @@ func NewGetAllRoutingInstancesUsingGETBadRequest() *GetAllRoutingInstancesUsingG
 Bad request
 */
 type GetAllRoutingInstancesUsingGETBadRequest struct {
-	Payload models.GeneralErrorMessage
+	Payload models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETBadRequest) Error() string {

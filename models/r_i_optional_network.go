@@ -22,7 +22,7 @@ type RIOptionalNetwork struct {
 	FilterIncomingRoutes bool `json:"filter_incoming_routes,omitempty"`
 
 	// prefix size
-	PrefixSize bool `json:"prefix_size,omitempty"`
+	PrefixSize float64 `json:"prefix_size,omitempty"`
 
 	// seller config
 	SellerConfig bool `json:"seller_config,omitempty"`

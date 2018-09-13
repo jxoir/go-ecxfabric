@@ -542,49 +542,49 @@
 					"204": {
 						"description": "No Content",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"400": {
 						"description": "Bad request",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"401": {
 						"description": "Unauthorized",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"403": {
 						"description": "Forbidden",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"405": {
 						"description": "Method Not Allowed",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"409": {
 						"description": "Conflict",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"500": {
 						"description": "Internal Server Error",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					},
 					"503": {
 						"description": "Service Unavailable",
 						"schema": {
-							"$ref": "#/definitions/GeneralErrorMessage"
+							"$ref": "#/definitions/GetRoutingInstanceErrorMessage"
 						}
 					}
 				}
@@ -3320,6 +3320,31 @@
 				}
 			}
 		},
+		"GetRoutingInstanceErrorMessage": {
+			"type": "object",
+			"properties": {
+				"code": {
+					"type": "string",
+					"example": "IC-ERROR-CODE"
+				},
+				"message": {
+					"type": "string",
+					"example": "ERROR-MESSAGE"
+				},
+				"moreInfo": {
+					"type": "string",
+					"example": "MORE-INFO"
+				},
+				"property": {
+					"type": "string",
+					"example": "PROPERTY"
+				},
+				"status": {
+					"type": "string",
+					"example": "400"
+				}
+			}			
+		},
 		"GeneralErrorMessage": {
 			"type": "array",
 			"items": {
@@ -4163,7 +4188,7 @@
 					"example": true
 				},
 				"prefix_size": {
-					"type": "boolean",
+					"type": "number",
 					"example": false
 				},
 				"cm_metros": {
