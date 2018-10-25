@@ -26,7 +26,7 @@ type OAuthResponse struct {
 
 	// token timeout
 	// TODO: Fix go-swagger, add string to int64 timeout
-        TokenTimeout int64 `json:"token_timeout,string,omitempty"`
+	TokenTimeout int64 `json:"token_timeout,string,omitempty"`
 
 	// token type
 	TokenType string `json:"token_type,omitempty"`

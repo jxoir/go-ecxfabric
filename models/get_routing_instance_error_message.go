@@ -11,27 +11,27 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// GetRoutingInstanceErrorMessage routinginstance error response
+// GetRoutingInstanceErrorMessage get routing instance error message
 // swagger:model GetRoutingInstanceErrorMessage
 type GetRoutingInstanceErrorMessage struct {
 
-	//  message
-	Message string `json:"message,omitempty"`
-
-	// error code
+	// code
 	Code string `json:"code,omitempty"`
 
-	// error more info
+	// message
+	Message string `json:"message,omitempty"`
+
+	// more info
 	MoreInfo string `json:"moreInfo,omitempty"`
 
-	// error property
+	// property
 	Property string `json:"property,omitempty"`
 
-	// error status
+	// status
 	Status string `json:"status,omitempty"`
 }
 
-// Validate validates this routinginstance error response
+// Validate validates this get routing instance error message
 func (m *GetRoutingInstanceErrorMessage) Validate(formats strfmt.Registry) error {
 	return nil
 }

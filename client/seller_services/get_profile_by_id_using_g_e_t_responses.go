@@ -75,7 +75,7 @@ func NewGetProfileByIDUsingGETOK() *GetProfileByIDUsingGETOK {
 Success
 */
 type GetProfileByIDUsingGETOK struct {
-	Payload *models.GetServProfServicesResp
+	Payload *models.GetServProfServicesRespContent
 }
 
 func (o *GetProfileByIDUsingGETOK) Error() string {
@@ -84,7 +84,7 @@ func (o *GetProfileByIDUsingGETOK) Error() string {
 
 func (o *GetProfileByIDUsingGETOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.GetServProfServicesResp)
+	o.Payload = new(models.GetServProfServicesRespContent)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

@@ -2970,7 +2970,7 @@
 					"200": {
 						"description": "Success",
 						"schema": {
-							"$ref": "#/definitions/GetServProfServicesResp"
+							"$ref": "#/definitions/GetServProfServicesRespContent"
 						}
 					},
 					"204": {
@@ -5423,7 +5423,10 @@
 					}
 				},
 				"metros": {
-					"$ref": "#/definitions/GetServProfServicesRespContentMetros"
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/GetServProfServicesRespContentMetros"
+					}
 				},
 				"createdDate": {
 					"type": "string",

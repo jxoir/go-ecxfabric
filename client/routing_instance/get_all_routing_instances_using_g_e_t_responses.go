@@ -132,7 +132,7 @@ func NewGetAllRoutingInstancesUsingGETNoContent() *GetAllRoutingInstancesUsingGE
 No Content
 */
 type GetAllRoutingInstancesUsingGETNoContent struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETNoContent) Error() string {
@@ -141,8 +141,10 @@ func (o *GetAllRoutingInstancesUsingGETNoContent) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -159,7 +161,7 @@ func NewGetAllRoutingInstancesUsingGETBadRequest() *GetAllRoutingInstancesUsingG
 Bad request
 */
 type GetAllRoutingInstancesUsingGETBadRequest struct {
-	Payload models.GetRoutingInstanceErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETBadRequest) Error() string {
@@ -168,8 +170,10 @@ func (o *GetAllRoutingInstancesUsingGETBadRequest) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -186,7 +190,7 @@ func NewGetAllRoutingInstancesUsingGETUnauthorized() *GetAllRoutingInstancesUsin
 Unauthorized
 */
 type GetAllRoutingInstancesUsingGETUnauthorized struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETUnauthorized) Error() string {
@@ -195,8 +199,10 @@ func (o *GetAllRoutingInstancesUsingGETUnauthorized) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -213,7 +219,7 @@ func NewGetAllRoutingInstancesUsingGETForbidden() *GetAllRoutingInstancesUsingGE
 Forbidden
 */
 type GetAllRoutingInstancesUsingGETForbidden struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETForbidden) Error() string {
@@ -222,8 +228,10 @@ func (o *GetAllRoutingInstancesUsingGETForbidden) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -240,7 +248,7 @@ func NewGetAllRoutingInstancesUsingGETMethodNotAllowed() *GetAllRoutingInstances
 Method Not Allowed
 */
 type GetAllRoutingInstancesUsingGETMethodNotAllowed struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETMethodNotAllowed) Error() string {
@@ -249,8 +257,10 @@ func (o *GetAllRoutingInstancesUsingGETMethodNotAllowed) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETMethodNotAllowed) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -267,7 +277,7 @@ func NewGetAllRoutingInstancesUsingGETConflict() *GetAllRoutingInstancesUsingGET
 Conflict
 */
 type GetAllRoutingInstancesUsingGETConflict struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETConflict) Error() string {
@@ -276,8 +286,10 @@ func (o *GetAllRoutingInstancesUsingGETConflict) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -294,7 +306,7 @@ func NewGetAllRoutingInstancesUsingGETInternalServerError() *GetAllRoutingInstan
 Internal Server Error
 */
 type GetAllRoutingInstancesUsingGETInternalServerError struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETInternalServerError) Error() string {
@@ -303,8 +315,10 @@ func (o *GetAllRoutingInstancesUsingGETInternalServerError) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -321,7 +335,7 @@ func NewGetAllRoutingInstancesUsingGETServiceUnavailable() *GetAllRoutingInstanc
 Service Unavailable
 */
 type GetAllRoutingInstancesUsingGETServiceUnavailable struct {
-	Payload models.GeneralErrorMessage
+	Payload *models.GetRoutingInstanceErrorMessage
 }
 
 func (o *GetAllRoutingInstancesUsingGETServiceUnavailable) Error() string {
@@ -330,8 +344,10 @@ func (o *GetAllRoutingInstancesUsingGETServiceUnavailable) Error() string {
 
 func (o *GetAllRoutingInstancesUsingGETServiceUnavailable) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.GetRoutingInstanceErrorMessage)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

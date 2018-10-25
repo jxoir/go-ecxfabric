@@ -52,7 +52,7 @@ type GetServProfServicesRespContent struct {
 	LastUpdatedDate string `json:"lastUpdatedDate,omitempty"`
 
 	// metros
-	Metros *GetServProfServicesRespContentMetros `json:"metros,omitempty"`
+	Metros []*GetServProfServicesRespContentMetros `json:"metros"`
 
 	// name
 	Name string `json:"name,omitempty"`
@@ -131,13 +131,20 @@ func (m *GetServProfServicesRespContent) validateMetros(formats strfmt.Registry)
 		return nil
 	}
 
-	if m.Metros != nil {
-		if err := m.Metros.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("metros")
-			}
-			return err
+	for i := 0; i < len(m.Metros); i++ {
+		if swag.IsZero(m.Metros[i]) { // not required
+			continue
 		}
+
+		if m.Metros[i] != nil {
+			if err := m.Metros[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("metros" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
