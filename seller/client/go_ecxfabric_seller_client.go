@@ -20,7 +20,7 @@ import (
 	"github.com/jxoir/go-ecxfabric/seller/client/service_profiles"
 )
 
-// Default API documentation HTTP client.
+// Default go ecxfabric seller HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -35,14 +35,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"https"}
 
-// NewHTTPClient creates a new API documentation HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *APIDocumentation {
+// NewHTTPClient creates a new go ecxfabric seller HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *GoEcxfabricSeller {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new API documentation HTTP client,
+// NewHTTPClientWithConfig creates a new go ecxfabric seller HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *APIDocumentation {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *GoEcxfabricSeller {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -53,14 +53,14 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *API
 	return New(transport, formats)
 }
 
-// New creates a new API documentation client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *APIDocumentation {
+// New creates a new go ecxfabric seller client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *GoEcxfabricSeller {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(APIDocumentation)
+	cli := new(GoEcxfabricSeller)
 	cli.Transport = transport
 
 	cli.AccessToken = access_token.New(transport, formats)
@@ -119,8 +119,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// APIDocumentation is a client for API documentation
-type APIDocumentation struct {
+// GoEcxfabricSeller is a client for go ecxfabric seller
+type GoEcxfabricSeller struct {
 	AccessToken *access_token.Client
 
 	Connections *connections.Client
@@ -139,7 +139,7 @@ type APIDocumentation struct {
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *APIDocumentation) SetTransport(transport runtime.ClientTransport) {
+func (c *GoEcxfabricSeller) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.AccessToken.SetTransport(transport)

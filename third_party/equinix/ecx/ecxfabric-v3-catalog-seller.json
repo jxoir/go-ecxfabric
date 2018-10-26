@@ -14,6 +14,18 @@
     "schemes": [
         "https"
     ],
+    "securityDefinitions": {
+		"bearerAuth": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	},
+	"security": [
+		{
+			"bearerAuth": []
+		}
+	],
     "paths": {
         "/oauth2/v1/token": {
             "post": {
@@ -3913,7 +3925,7 @@
                     "$ref": "#/definitions/GetServiceprofilesResContentNamedTags"
                 },
                 "alertPercentage": {
-                    "type": "integer",
+                    "type": "number",
                     "example": 50
                 },
                 "onProfileApprovalRejectNotification": {
@@ -3938,7 +3950,10 @@
                     }
                 },
                 "ports": {
-                    "$ref": "#/definitions/PortDetail"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PortDetail"
+                    }
                 },
                 "allowCustomSpeed": {
                     "type": "boolean",

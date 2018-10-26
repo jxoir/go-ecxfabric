@@ -29,7 +29,7 @@ CreateConnectorUsingPOST creates connector
 
 This API is used to create Connector.
 */
-func (a *Client) CreateConnectorUsingPOST(params *CreateConnectorUsingPOSTParams) (*CreateConnectorUsingPOSTCreated, error) {
+func (a *Client) CreateConnectorUsingPOST(params *CreateConnectorUsingPOSTParams, authInfo runtime.ClientAuthInfoWriter) (*CreateConnectorUsingPOSTCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateConnectorUsingPOSTParams()
@@ -44,6 +44,7 @@ func (a *Client) CreateConnectorUsingPOST(params *CreateConnectorUsingPOSTParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateConnectorUsingPOSTReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -59,7 +60,7 @@ DeleteConnectorUsingDELETE deletes connector
 
 This API is used to delete Connector for given uuid
 */
-func (a *Client) DeleteConnectorUsingDELETE(params *DeleteConnectorUsingDELETEParams) (*DeleteConnectorUsingDELETENoContent, error) {
+func (a *Client) DeleteConnectorUsingDELETE(params *DeleteConnectorUsingDELETEParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteConnectorUsingDELETENoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteConnectorUsingDELETEParams()
@@ -74,6 +75,7 @@ func (a *Client) DeleteConnectorUsingDELETE(params *DeleteConnectorUsingDELETEPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteConnectorUsingDELETEReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -89,7 +91,7 @@ GetAllConnectorsUsingGET returns list of connectors
 
 This API is used to get all Connectors with respective to query params
 */
-func (a *Client) GetAllConnectorsUsingGET(params *GetAllConnectorsUsingGETParams) (*GetAllConnectorsUsingGETOK, error) {
+func (a *Client) GetAllConnectorsUsingGET(params *GetAllConnectorsUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetAllConnectorsUsingGETOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAllConnectorsUsingGETParams()
@@ -104,6 +106,7 @@ func (a *Client) GetAllConnectorsUsingGET(params *GetAllConnectorsUsingGETParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllConnectorsUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -119,7 +122,7 @@ IsConnectorExistUsingGET validates connector name already exists or not
 
 This API is used to check connector name exists or not
 */
-func (a *Client) IsConnectorExistUsingGET(params *IsConnectorExistUsingGETParams) (*IsConnectorExistUsingGETOK, *IsConnectorExistUsingGETNoContent, error) {
+func (a *Client) IsConnectorExistUsingGET(params *IsConnectorExistUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*IsConnectorExistUsingGETOK, *IsConnectorExistUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIsConnectorExistUsingGETParams()
@@ -134,6 +137,7 @@ func (a *Client) IsConnectorExistUsingGET(params *IsConnectorExistUsingGETParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &IsConnectorExistUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -155,7 +159,7 @@ UpdateConnectorUsingPATCH updates connector
 
 This API is used to update connector for given uuid
 */
-func (a *Client) UpdateConnectorUsingPATCH(params *UpdateConnectorUsingPATCHParams) (*UpdateConnectorUsingPATCHNoContent, error) {
+func (a *Client) UpdateConnectorUsingPATCH(params *UpdateConnectorUsingPATCHParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateConnectorUsingPATCHNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateConnectorUsingPATCHParams()
@@ -170,6 +174,7 @@ func (a *Client) UpdateConnectorUsingPATCH(params *UpdateConnectorUsingPATCHPara
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdateConnectorUsingPATCHReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

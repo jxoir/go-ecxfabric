@@ -29,7 +29,7 @@ GetMetrosUsingGET returns list of all metros
 
 The Get Metros API allows ECX participants to either retrieve a list of all metros where they have ports or to retrieve a list of all metros where ECX is enabled, depending on the API parameters.
 */
-func (a *Client) GetMetrosUsingGET(params *GetMetrosUsingGETParams) (*GetMetrosUsingGETOK, *GetMetrosUsingGETNoContent, error) {
+func (a *Client) GetMetrosUsingGET(params *GetMetrosUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetMetrosUsingGETOK, *GetMetrosUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetMetrosUsingGETParams()
@@ -44,6 +44,7 @@ func (a *Client) GetMetrosUsingGET(params *GetMetrosUsingGETParams) (*GetMetrosU
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetMetrosUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

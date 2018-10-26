@@ -29,7 +29,7 @@ CreateServiceProfileUsingPOST creates service profile for l2
 
 This is the API used to create a new service profile which allows an ECX participant to offer their services on the ECX Fabric platform. The API has parameters such as what bandwidths to make available, what information to request from customers wishing to connect, the type of service profiles being created (private/public) and other information about how an ECX participant may want to offer their services. Please refer to the ECX documentation for more information about the creation of service profiles.
 */
-func (a *Client) CreateServiceProfileUsingPOST(params *CreateServiceProfileUsingPOSTParams) (*CreateServiceProfileUsingPOSTOK, error) {
+func (a *Client) CreateServiceProfileUsingPOST(params *CreateServiceProfileUsingPOSTParams, authInfo runtime.ClientAuthInfoWriter) (*CreateServiceProfileUsingPOSTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateServiceProfileUsingPOSTParams()
@@ -44,6 +44,7 @@ func (a *Client) CreateServiceProfileUsingPOST(params *CreateServiceProfileUsing
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateServiceProfileUsingPOSTReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -59,7 +60,7 @@ CreateServiceProfilesUsingPOST creates service profile
 
 This API is used to create Service Profiles
 */
-func (a *Client) CreateServiceProfilesUsingPOST(params *CreateServiceProfilesUsingPOSTParams) (*CreateServiceProfilesUsingPOSTCreated, *CreateServiceProfilesUsingPOSTNoContent, error) {
+func (a *Client) CreateServiceProfilesUsingPOST(params *CreateServiceProfilesUsingPOSTParams, authInfo runtime.ClientAuthInfoWriter) (*CreateServiceProfilesUsingPOSTCreated, *CreateServiceProfilesUsingPOSTNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateServiceProfilesUsingPOSTParams()
@@ -74,6 +75,7 @@ func (a *Client) CreateServiceProfilesUsingPOST(params *CreateServiceProfilesUsi
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateServiceProfilesUsingPOSTReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -93,7 +95,7 @@ func (a *Client) CreateServiceProfilesUsingPOST(params *CreateServiceProfilesUsi
 /*
 DeleteProfileByIDUsingDELETE deletes seller profile for given uuid
 */
-func (a *Client) DeleteProfileByIDUsingDELETE(params *DeleteProfileByIDUsingDELETEParams) (*DeleteProfileByIDUsingDELETENoContent, error) {
+func (a *Client) DeleteProfileByIDUsingDELETE(params *DeleteProfileByIDUsingDELETEParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProfileByIDUsingDELETENoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteProfileByIDUsingDELETEParams()
@@ -108,6 +110,7 @@ func (a *Client) DeleteProfileByIDUsingDELETE(params *DeleteProfileByIDUsingDELE
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteProfileByIDUsingDELETEReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -123,7 +126,7 @@ DeleteProfileByProfileNameOrUUIDUsingDELETE deletes service profile based on pro
 
 This API will delete a service profile based on the service profile name or uuid (the unique identifier associated with the service). The expected response would be that the deletion was successful.
 */
-func (a *Client) DeleteProfileByProfileNameOrUUIDUsingDELETE(params *DeleteProfileByProfileNameOrUUIDUsingDELETEParams) (*DeleteProfileByProfileNameOrUUIDUsingDELETEOK, *DeleteProfileByProfileNameOrUUIDUsingDELETENoContent, error) {
+func (a *Client) DeleteProfileByProfileNameOrUUIDUsingDELETE(params *DeleteProfileByProfileNameOrUUIDUsingDELETEParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProfileByProfileNameOrUUIDUsingDELETEOK, *DeleteProfileByProfileNameOrUUIDUsingDELETENoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteProfileByProfileNameOrUUIDUsingDELETEParams()
@@ -138,6 +141,7 @@ func (a *Client) DeleteProfileByProfileNameOrUUIDUsingDELETE(params *DeleteProfi
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteProfileByProfileNameOrUUIDUsingDELETEReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -159,7 +163,7 @@ EditL3ServiceProfileUsingPUT updates service profile
 
 API returns update seller profile details
 */
-func (a *Client) EditL3ServiceProfileUsingPUT(params *EditL3ServiceProfileUsingPUTParams) (*EditL3ServiceProfileUsingPUTOK, *EditL3ServiceProfileUsingPUTNoContent, error) {
+func (a *Client) EditL3ServiceProfileUsingPUT(params *EditL3ServiceProfileUsingPUTParams, authInfo runtime.ClientAuthInfoWriter) (*EditL3ServiceProfileUsingPUTOK, *EditL3ServiceProfileUsingPUTNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEditL3ServiceProfileUsingPUTParams()
@@ -174,6 +178,7 @@ func (a *Client) EditL3ServiceProfileUsingPUT(params *EditL3ServiceProfileUsingP
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &EditL3ServiceProfileUsingPUTReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -195,7 +200,7 @@ GetAllSellerProfileUsingGET returns all service profiles
 
 The GET Service Profiles API will return detailed information about all ECX service profiles. The parameters include a state field that can be set to one of the following- pending approval, approved, rejected or deleted. The information returned via the API includes all information about the service profiles as well as the ports associated with each of these profiles.
 */
-func (a *Client) GetAllSellerProfileUsingGET(params *GetAllSellerProfileUsingGETParams) (*GetAllSellerProfileUsingGETOK, *GetAllSellerProfileUsingGETNoContent, error) {
+func (a *Client) GetAllSellerProfileUsingGET(params *GetAllSellerProfileUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetAllSellerProfileUsingGETOK, *GetAllSellerProfileUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAllSellerProfileUsingGETParams()
@@ -210,6 +215,7 @@ func (a *Client) GetAllSellerProfileUsingGET(params *GetAllSellerProfileUsingGET
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllSellerProfileUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -231,7 +237,7 @@ GetAllServiceProfilesUsingGET returns list of service profiles
 
 This API is used to get all Service Profiles with respective to query params
 */
-func (a *Client) GetAllServiceProfilesUsingGET(params *GetAllServiceProfilesUsingGETParams) (*GetAllServiceProfilesUsingGETOK, *GetAllServiceProfilesUsingGETNoContent, error) {
+func (a *Client) GetAllServiceProfilesUsingGET(params *GetAllServiceProfilesUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetAllServiceProfilesUsingGETOK, *GetAllServiceProfilesUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAllServiceProfilesUsingGETParams()
@@ -246,6 +252,7 @@ func (a *Client) GetAllServiceProfilesUsingGET(params *GetAllServiceProfilesUsin
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllServiceProfilesUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -265,7 +272,7 @@ func (a *Client) GetAllServiceProfilesUsingGET(params *GetAllServiceProfilesUsin
 /*
 GetProfileByID fetches seller profile based on uuid
 */
-func (a *Client) GetProfileByID(params *GetProfileByIDParams) (*GetProfileByIDOK, *GetProfileByIDNoContent, error) {
+func (a *Client) GetProfileByID(params *GetProfileByIDParams, authInfo runtime.ClientAuthInfoWriter) (*GetProfileByIDOK, *GetProfileByIDNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProfileByIDParams()
@@ -280,6 +287,7 @@ func (a *Client) GetProfileByID(params *GetProfileByIDParams) (*GetProfileByIDOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProfileByIDReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -301,7 +309,7 @@ GetProfileByIDOrNameUsingGET returns service profile based on search criteria pr
 
 This API returns details about all service profiles that meet a particular search criterion which can be either the profile name or the uuid (the unique identifier associated with a service).
 */
-func (a *Client) GetProfileByIDOrNameUsingGET(params *GetProfileByIDOrNameUsingGETParams) (*GetProfileByIDOrNameUsingGETOK, *GetProfileByIDOrNameUsingGETNoContent, error) {
+func (a *Client) GetProfileByIDOrNameUsingGET(params *GetProfileByIDOrNameUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetProfileByIDOrNameUsingGETOK, *GetProfileByIDOrNameUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetProfileByIDOrNameUsingGETParams()
@@ -316,6 +324,7 @@ func (a *Client) GetProfileByIDOrNameUsingGET(params *GetProfileByIDOrNameUsingG
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProfileByIDOrNameUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -337,7 +346,7 @@ UpdateL2ServiceProfileUsingPUT updates service profile for l2
 
 This API allows ECX participants to make changes to their existing Layer 2 service profile. The payload includes all the fields required for creation of a service profile but will include the updated fields that are allowed to be changed. For example, participants have the ability to set a threshold percentage in their service profile for which they will be notified if the allocated/purchased bandwidth on their ports that are associated with that profile exceeds the threshold. This threshold percentage can be changed by using the PUT service profiles API.
 */
-func (a *Client) UpdateL2ServiceProfileUsingPUT(params *UpdateL2ServiceProfileUsingPUTParams) (*UpdateL2ServiceProfileUsingPUTOK, error) {
+func (a *Client) UpdateL2ServiceProfileUsingPUT(params *UpdateL2ServiceProfileUsingPUTParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateL2ServiceProfileUsingPUTOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateL2ServiceProfileUsingPUTParams()
@@ -352,6 +361,7 @@ func (a *Client) UpdateL2ServiceProfileUsingPUT(params *UpdateL2ServiceProfileUs
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdateL2ServiceProfileUsingPUTReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -367,7 +377,7 @@ ValidateIntegrationIDUsingGET validates integration id
 
 As some destinations on the ECX Fabric platform have been integrated with the ECX APIs (ex. AWS and Azure), this API is used to validate an integration id and returns all the regions that are associated with that destination (Ex. AWS East Region 1, etc.).
 */
-func (a *Client) ValidateIntegrationIDUsingGET(params *ValidateIntegrationIDUsingGETParams) (*ValidateIntegrationIDUsingGETOK, *ValidateIntegrationIDUsingGETNoContent, error) {
+func (a *Client) ValidateIntegrationIDUsingGET(params *ValidateIntegrationIDUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*ValidateIntegrationIDUsingGETOK, *ValidateIntegrationIDUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewValidateIntegrationIDUsingGETParams()
@@ -382,6 +392,7 @@ func (a *Client) ValidateIntegrationIDUsingGET(params *ValidateIntegrationIDUsin
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ValidateIntegrationIDUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

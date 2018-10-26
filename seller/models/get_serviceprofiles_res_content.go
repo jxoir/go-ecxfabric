@@ -19,7 +19,7 @@ import (
 type GetServiceprofilesResContent struct {
 
 	// alert percentage
-	AlertPercentage int64 `json:"alertPercentage,omitempty"`
+	AlertPercentage float64 `json:"alertPercentage,omitempty"`
 
 	// allow custom speed
 	AllowCustomSpeed bool `json:"allowCustomSpeed,omitempty"`
@@ -100,7 +100,7 @@ type GetServiceprofilesResContent struct {
 	OrganizationName string `json:"organizationName,omitempty"`
 
 	// ports
-	Ports *PortDetail `json:"ports,omitempty"`
+	Ports []*PortDetail `json:"ports"`
 
 	// private
 	Private bool `json:"private,omitempty"`
@@ -218,13 +218,20 @@ func (m *GetServiceprofilesResContent) validatePorts(formats strfmt.Registry) er
 		return nil
 	}
 
-	if m.Ports != nil {
-		if err := m.Ports.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("ports")
-			}
-			return err
+	for i := 0; i < len(m.Ports); i++ {
+		if swag.IsZero(m.Ports[i]) { // not required
+			continue
 		}
+
+		if m.Ports[i] != nil {
+			if err := m.Ports[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("ports" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

@@ -29,7 +29,7 @@ GetSellerConnectionsUsingGET as a seller fetch all connections created on my ser
 
 The Get Connections API (Seller) will retrieve all connections to a specified service profile. This API will return details regarding all connections where the specified service profile is a destination on the ECX platform. For example, as an ECX participant, you may wish to make your service available on the ECX platform for other partners or customers to connect to your services. These partners or customers will create connections to your services as a destination from their ports on the ECX (sometimes referred to as the origin of the connection). This is useful to monitor the number of connections on existing ports and the amount of bandwidth consumed by these connections.
 */
-func (a *Client) GetSellerConnectionsUsingGET(params *GetSellerConnectionsUsingGETParams) (*GetSellerConnectionsUsingGETOK, *GetSellerConnectionsUsingGETNoContent, error) {
+func (a *Client) GetSellerConnectionsUsingGET(params *GetSellerConnectionsUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetSellerConnectionsUsingGETOK, *GetSellerConnectionsUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetSellerConnectionsUsingGETParams()
@@ -44,6 +44,7 @@ func (a *Client) GetSellerConnectionsUsingGET(params *GetSellerConnectionsUsingG
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetSellerConnectionsUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -65,7 +66,7 @@ PerformUserActionUsingPATCH APIs for seller to perform operations on a virtual c
 
 When a buyer creates a connection to a service provider (cloud provider or another ECX participant), that service provider may be required to accept (or reject) the connection � depending on if the service provider has chosen to accept/reject connections. The Patch Connections API can be used by that service provider to accept, reject or confirm the deletion of a virtual circuit connections.
 */
-func (a *Client) PerformUserActionUsingPATCH(params *PerformUserActionUsingPATCHParams) (*PerformUserActionUsingPATCHOK, error) {
+func (a *Client) PerformUserActionUsingPATCH(params *PerformUserActionUsingPATCHParams, authInfo runtime.ClientAuthInfoWriter) (*PerformUserActionUsingPATCHOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewPerformUserActionUsingPATCHParams()
@@ -80,6 +81,7 @@ func (a *Client) PerformUserActionUsingPATCH(params *PerformUserActionUsingPATCH
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &PerformUserActionUsingPATCHReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

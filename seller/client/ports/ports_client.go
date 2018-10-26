@@ -29,7 +29,7 @@ GetPortInfoUsingGET2 fetches list of virtual ports
 
 The Get Ports API allow ECX participants to retrieve a list of all their Ports assigned to their customer id (known as uuID). This is useful and necessary when creating connections as all connections within the ECX platform are associated with the customer�s port and require the port id when calling the Post Connections API. Detailed information about all ports are returned including the encapsulation (Dot1Q or QinQ), the metro and region where the ports are located, port size/bandwidth, and other pertinent information.
 */
-func (a *Client) GetPortInfoUsingGET2(params *GetPortInfoUsingGET2Params) (*GetPortInfoUsingGET2OK, error) {
+func (a *Client) GetPortInfoUsingGET2(params *GetPortInfoUsingGET2Params, authInfo runtime.ClientAuthInfoWriter) (*GetPortInfoUsingGET2OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetPortInfoUsingGET2Params()
@@ -44,6 +44,7 @@ func (a *Client) GetPortInfoUsingGET2(params *GetPortInfoUsingGET2Params) (*GetP
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetPortInfoUsingGET2Reader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

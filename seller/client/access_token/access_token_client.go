@@ -29,7 +29,7 @@ GetAccessToken returns oauth2 access token
 
 The ECX Fabric APIs use a custom per request authentication system. All calls to the API must use the API Oauth key that can be obtained by calling the authentication API. In the case of an incorrect key, the appropriate error message will be returned.
 */
-func (a *Client) GetAccessToken(params *GetAccessTokenParams) (*GetAccessTokenOK, error) {
+func (a *Client) GetAccessToken(params *GetAccessTokenParams, authInfo runtime.ClientAuthInfoWriter) (*GetAccessTokenOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAccessTokenParams()
@@ -44,6 +44,7 @@ func (a *Client) GetAccessToken(params *GetAccessTokenParams) (*GetAccessTokenOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAccessTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

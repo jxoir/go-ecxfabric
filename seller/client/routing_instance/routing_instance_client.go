@@ -29,7 +29,7 @@ CreateRoutingInstanceUsingPOST creates routing instance
 
 This API is used to create Routing Instance
 */
-func (a *Client) CreateRoutingInstanceUsingPOST(params *CreateRoutingInstanceUsingPOSTParams) (*CreateRoutingInstanceUsingPOSTCreated, *CreateRoutingInstanceUsingPOSTNoContent, error) {
+func (a *Client) CreateRoutingInstanceUsingPOST(params *CreateRoutingInstanceUsingPOSTParams, authInfo runtime.ClientAuthInfoWriter) (*CreateRoutingInstanceUsingPOSTCreated, *CreateRoutingInstanceUsingPOSTNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateRoutingInstanceUsingPOSTParams()
@@ -44,6 +44,7 @@ func (a *Client) CreateRoutingInstanceUsingPOST(params *CreateRoutingInstanceUsi
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateRoutingInstanceUsingPOSTReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -65,7 +66,7 @@ DeleteRoutingInstanceUsingDELETE deletes routing instance
 
 This API is used to delete Routing Instance for given uuid
 */
-func (a *Client) DeleteRoutingInstanceUsingDELETE(params *DeleteRoutingInstanceUsingDELETEParams) (*DeleteRoutingInstanceUsingDELETENoContent, error) {
+func (a *Client) DeleteRoutingInstanceUsingDELETE(params *DeleteRoutingInstanceUsingDELETEParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteRoutingInstanceUsingDELETENoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteRoutingInstanceUsingDELETEParams()
@@ -80,6 +81,7 @@ func (a *Client) DeleteRoutingInstanceUsingDELETE(params *DeleteRoutingInstanceU
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteRoutingInstanceUsingDELETEReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -95,7 +97,7 @@ GetAllRoutingInstancesUsingGET returns list of routing instances
 
 This API is used to get all Routing Instances with respective to query params
 */
-func (a *Client) GetAllRoutingInstancesUsingGET(params *GetAllRoutingInstancesUsingGETParams) (*GetAllRoutingInstancesUsingGETOK, *GetAllRoutingInstancesUsingGETNoContent, error) {
+func (a *Client) GetAllRoutingInstancesUsingGET(params *GetAllRoutingInstancesUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*GetAllRoutingInstancesUsingGETOK, *GetAllRoutingInstancesUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetAllRoutingInstancesUsingGETParams()
@@ -110,6 +112,7 @@ func (a *Client) GetAllRoutingInstancesUsingGET(params *GetAllRoutingInstancesUs
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllRoutingInstancesUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -131,7 +134,7 @@ IsRoutingInstanceExistUsingGET validates if routing instance name already exists
 
 This API is used to check Routing Instance name exists or not
 */
-func (a *Client) IsRoutingInstanceExistUsingGET(params *IsRoutingInstanceExistUsingGETParams) (*IsRoutingInstanceExistUsingGETOK, *IsRoutingInstanceExistUsingGETNoContent, error) {
+func (a *Client) IsRoutingInstanceExistUsingGET(params *IsRoutingInstanceExistUsingGETParams, authInfo runtime.ClientAuthInfoWriter) (*IsRoutingInstanceExistUsingGETOK, *IsRoutingInstanceExistUsingGETNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewIsRoutingInstanceExistUsingGETParams()
@@ -146,6 +149,7 @@ func (a *Client) IsRoutingInstanceExistUsingGET(params *IsRoutingInstanceExistUs
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &IsRoutingInstanceExistUsingGETReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -167,7 +171,7 @@ UpdateRoutingInstanceUsingPATCH updates routing instance
 
 This API is used to update Routing Instance for given uuid.
 */
-func (a *Client) UpdateRoutingInstanceUsingPATCH(params *UpdateRoutingInstanceUsingPATCHParams) (*UpdateRoutingInstanceUsingPATCHNoContent, error) {
+func (a *Client) UpdateRoutingInstanceUsingPATCH(params *UpdateRoutingInstanceUsingPATCHParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateRoutingInstanceUsingPATCHNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateRoutingInstanceUsingPATCHParams()
@@ -182,6 +186,7 @@ func (a *Client) UpdateRoutingInstanceUsingPATCH(params *UpdateRoutingInstanceUs
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdateRoutingInstanceUsingPATCHReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
