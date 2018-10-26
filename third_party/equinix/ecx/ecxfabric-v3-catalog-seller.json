@@ -1,0 +1,4539 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Equinix Cloud Exchange Seller API",
+        "version": "3.0",
+        "title": "API Documentation",
+        "termsOfService": "https://developer.equinix.com/terms-use",
+        "contact": {
+            "name": "Equinix Api Support",
+            "email": "api-support@equinix.com"
+        }
+    },
+    "host": "api.equinix.com",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/oauth2/v1/token": {
+            "post": {
+                "tags": [
+                    "Access Token"
+                ],
+                "summary": "Returns Oauth2 Access Token",
+                "description": "The ECX Fabric APIs use a custom per request authentication system. All calls to the API must use the API Oauth key that can be obtained by calling the authentication API. In the case of an incorrect key, the appropriate error message will be returned.",
+                "operationId": "getAccessToken",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OAuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/OAuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Please enter a valid client id/client secret/username/password and try again",
+                        "schema": {
+                            "$ref": "#/definitions/OAuthErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l2/common/metros": {
+            "get": {
+                "tags": [
+                    "Metros"
+                ],
+                "summary": "Returns list of all metros",
+                "description": "The Get Metros API allows ECX participants to either retrieve a list of all metros where they have ports or to retrieve a list of all metros where ECX is enabled, depending on the API parameters.",
+                "operationId": "getMetrosUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/GETCommonMetroResp"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/port/userport": {
+            "get": {
+                "tags": [
+                    "Ports"
+                ],
+                "summary": "Fetch List of VirtualPorts",
+                "description": "The Get Ports API allow ECX participants to retrieve a list of all their Ports assigned to their customer id (known as uuID). This is useful and necessary when creating connections as all connections within the ECX platform are associated with the customer�s port and require the port id when calling the Post Connections API. Detailed information about all ports are returned including the encapsulation (Dot1Q or QinQ), the metro and region where the ports are located, port size/bandwidth, and other pertinent information.",
+                "operationId": "getPortInfoUsingGET_2",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved list",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/UserPortResObj"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You are not authorized to view the resource"
+                    },
+                    "403": {
+                        "description": "Accessing the resource you were trying to reach is forbidden"
+                    },
+                    "404": {
+                        "description": "The resource you were trying to reach is not found"
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l2/serviceprofiles": {
+            "get": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Returns all service profiles",
+                "description": "The GET Service Profiles API will return detailed information about all ECX service profiles. The parameters include a state field that can be set to one of the following- pending approval, approved, rejected or deleted. The information returned via the API includes all information about the service profiles as well as the ports associated with each of these profiles.",
+                "operationId": "getAllSellerProfileUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "total number of records",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "state of the profile requested",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "PENDING_APPROVAL",
+                                "APPROVED",
+                                "REJECTED",
+                                "DELETED"
+                            ]
+                        },
+                        "collectionFormat": "multi",
+                        "enum": [
+                            "PENDING_APPROVAL",
+                            "APPROVED",
+                            "REJECTED",
+                            "DELETED"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetServiceprofilesResp"
+                        }
+                    },
+                    "204": {
+                        "description": "Record Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Create Service profile for l2",
+                "description": "This is the API used to create a new service profile which allows an ECX participant to offer their services on the ECX Fabric platform. The API has parameters such as what bandwidths to make available, what information to request from customers wishing to connect, the type of service profiles being created (private/public) and other information about how an ECX participant may want to offer their services. Please refer to the ECX documentation for more information about the creation of service profiles.",
+                "operationId": "createServiceProfileUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "in": "body",
+                        "name": "profileModel",
+                        "description": "profileModel",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ProfileModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/PostServiceprofilesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Update Service profile for l2",
+                "description": "This API allows ECX participants to make changes to their existing Layer 2 service profile. The payload includes all the fields required for creation of a service profile but will include the updated fields that are allowed to be changed. For example, participants have the ability to set a threshold percentage in their service profile for which they will be notified if the allocated/purchased bandwidth on their ports that are associated with that profile exceeds the threshold. This threshold percentage can be changed by using the PUT service profiles API.",
+                "operationId": "updateL2ServiceProfileUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "in": "body",
+                        "name": "profileModel",
+                        "description": "profileModel",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ProfileModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/PutServiceprofilesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l2/serviceprofiles/validateIntegrationId/{integrationId}": {
+            "get": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Validate integration id",
+                "description": "As some destinations on the ECX Fabric platform have been integrated with the ECX APIs (ex. AWS and Azure), this API is used to validate an integration id and returns all the regions that are associated with that destination (Ex. AWS East Region 1, etc.).",
+                "operationId": "validateIntegrationIdUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "integrationId",
+                        "in": "path",
+                        "description": "integrationId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ValidateIntegrationIdResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "404": {
+                        "description": "Record Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l2/serviceprofiles/{uuid}": {
+            "delete": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Delete service profile based on profile name or uuid ",
+                "description": "This API will delete a service profile based on the service profile name or uuid (the unique identifier associated with the service). The expected response would be that the deletion was successful.",
+                "operationId": "deleteProfileByProfileNameOrUUIDUsingDELETE",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuids",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteServiceProfileResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "Record Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Returns service profile based on search criteria - profile name or uuid",
+                "description": "This API returns details about all service profiles that meet a particular search criterion which can be either the profile name or the uuid (the unique identifier associated with a service).",
+                "operationId": "getProfileByIdOrNameUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "service profile uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetServiceprofilesResContent"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "404": {
+                        "description": "Record Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/serviceprofiles": {
+            "get": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Returns list of Service Profiles",
+                "description": "This API is used to get all Service Profiles with respective to query params",
+                "operationId": "getAllServiceProfilesUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "state",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "PENDING_APPROVAL",
+                                "APPROVED",
+                                "REJECTED",
+                                "DELETED"
+                            ]
+                        },
+                        "collectionFormat": "multi",
+                        "enum": [
+                            "PENDING_APPROVAL",
+                            "APPROVED",
+                            "REJECTED",
+                            "DELETED"
+                        ]
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 0
+                    },
+                    {
+                        "name": "total",
+                        "in": "query",
+                        "description": "total",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 900
+                    },
+                    {
+                        "name": "noFilterReq",
+                        "in": "query",
+                        "description": "noFilterReq",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "metros",
+                        "in": "query",
+                        "description": "metros",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/GetServiceProfileL3Response"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Create Service Profile",
+                "description": "This API is used to create Service Profiles",
+                "operationId": "createServiceProfilesUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceProfilesCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceProfilesCreateResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/serviceprofiles/{uuid}": {
+            "get": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Fetch seller profile based on uuid",
+                "operationId": "getProfileById",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GETServiceProfileModelv3"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Update service profile",
+                "description": "API returns update seller profile details",
+                "operationId": "editL3ServiceProfileUsingPUT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastUpdatedDate",
+                        "in": "header",
+                        "description": "last update date",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "serviceProfileModel",
+                        "description": "serviceProfileModel",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ServiceProfileModelv3"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/PutServiceProfileModelv3"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Service Profiles"
+                ],
+                "summary": "Delete seller profile for given uuid",
+                "operationId": "deleteProfileByIdUsingDELETE",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l2/connections/{connId}": {
+            "patch": {
+                "tags": [
+                    "Connections"
+                ],
+                "summary": "API for seller to perform operations on a virtual circuit by a buyer",
+                "description": "When a buyer creates a connection to a service provider (cloud provider or another ECX participant), that service provider may be required to accept (or reject) the connection � depending on if the service provider has chosen to accept/reject connections. The Patch Connections API can be used by that service provider to accept, reject or confirm the deletion of a virtual circuit connections.",
+                "operationId": "performUserActionUsingPATCH",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "description": "action",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "connId",
+                        "in": "path",
+                        "description": "connId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PatchRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/PatchConnectionresponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/routinginstance": {
+            "get": {
+                "tags": [
+                    "Routing Instance"
+                ],
+                "summary": "Returns list of routing instances",
+                "description": "This API is used to get all Routing Instances with respective to query params",
+                "operationId": "getAllRoutingInstancesUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "states",
+                        "in": "query",
+                        "description": "states",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "CREATED",
+                                "BEING_PROVISIONED",
+                                "PROVISIONED",
+                                "BEING_REPROVISIONED",
+                                "BEING_DEPROVISIONED",
+                                "ERRORED"
+                            ]
+                        },
+                        "collectionFormat": "multi",
+                        "enum": [
+                            "CREATED",
+                            "BEING_PROVISIONED",
+                            "PROVISIONED",
+                            "BEING_REPROVISIONED",
+                            "BEING_DEPROVISIONED",
+                            "ERRORED"
+                        ]
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "pageNumber",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 1
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "pageSize",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 900
+                    },
+                    {
+                        "name": "metroCode",
+                        "in": "query",
+                        "description": "metroCode",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/GetRoutingInstancesResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Routing Instance"
+                ],
+                "summary": "Create Routing Instance",
+                "description": "This API is used to create Routing Instance",
+                "operationId": "createRoutingInstanceUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/RoutingInstanceCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "$ref": "#/definitions/RoutingInstanceCreateResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/routinginstance/exist/{metroCode}/{name}": {
+            "get": {
+                "tags": [
+                    "Routing Instance"
+                ],
+                "summary": "Validates if routing instance name already exists or not.",
+                "description": "This API is used to check Routing Instance name exists or not",
+                "operationId": "isRoutingInstanceExistUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "metroCode",
+                        "in": "path",
+                        "description": "Metro Code",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Routing Instance Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/RoutingInstanceExistenceResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/routinginstance/{uuid}": {
+            "delete": {
+                "tags": [
+                    "Routing Instance"
+                ],
+                "summary": "Delete Routing Instance",
+                "description": "This API is used to delete Routing Instance for given uuid",
+                "operationId": "deleteRoutingInstanceUsingDELETE",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Routing Instance"
+                ],
+                "summary": "Update Routing Instance",
+                "description": "This API is used to update Routing Instance for given uuid.",
+                "operationId": "updateRoutingInstanceUsingPATCH",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "schema": {
+                            "$ref": "#/definitions/RoutingInstanceUpdateRequest"
+                        }
+                    },
+                    {
+                        "name": "lastUpdatedDate",
+                        "in": "header",
+                        "description": "last update date",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/connector": {
+            "get": {
+                "tags": [
+                    "Connector"
+                ],
+                "summary": "Returns list of connectors",
+                "description": "This API is used to get all Connectors with respective to query params",
+                "operationId": "getAllConnectorsUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "states",
+                        "in": "query",
+                        "description": "states",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "BEING_PROVISIONED",
+                                "PROVISIONED",
+                                "BEING_REPROVISIONED",
+                                "BEING_DEPROVISIONED",
+                                "ERRORED"
+                            ]
+                        },
+                        "collectionFormat": "multi",
+                        "enum": [
+                            "BEING_PROVISIONED",
+                            "PROVISIONED",
+                            "BEING_REPROVISIONED",
+                            "BEING_DEPROVISIONED",
+                            "ERRORED"
+                        ]
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "pageNumber",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 1
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "pageSize",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 900
+                    },
+                    {
+                        "name": "metroCode",
+                        "in": "query",
+                        "description": "metroCode",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/GetConnectorsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Connector"
+                ],
+                "summary": "Create Connector",
+                "description": "This API is used to create Connector.",
+                "operationId": "createConnectorUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ConnectorCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "$ref": "#/definitions/ConnectorCreateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/connector/exist/{metroCode}/{name}": {
+            "get": {
+                "tags": [
+                    "Connector"
+                ],
+                "summary": "Validate connector name already exists or not",
+                "description": "This API is used to check connector name exists or not",
+                "operationId": "isConnectorExistUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "metroCode",
+                        "in": "path",
+                        "description": "Metro Code",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Connector Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/ConnectorExistenceResponse"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l3/connector/{uuid}": {
+            "delete": {
+                "tags": [
+                    "Connector"
+                ],
+                "summary": "Delete Connector",
+                "description": "This API is used to delete Connector for given uuid",
+                "operationId": "deleteConnectorUsingDELETE",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Connector"
+                ],
+                "summary": "Update connector",
+                "description": "This API is used to update connector for given uuid",
+                "operationId": "updateConnectorUsingPATCH",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastUpdatedDate",
+                        "in": "header",
+                        "description": "last updated date",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "request",
+                        "description": "request",
+                        "schema": {
+                            "$ref": "#/definitions/ConnectorUpdateModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/GeneralErrorMessage"
+                        }
+                    }
+                }
+            }
+        },
+        "/ecx/v3/l2/seller/connections": {
+            "get": {
+                "tags": [
+                    "Connections"
+                ],
+                "summary": "As a seller, fetch all connections created on my services profiles.\n",
+                "description": "The Get Connections API (Seller) will retrieve all connections to a specified service profile. This API will return details regarding all connections where the specified service profile is a destination on the ECX platform. For example, as an ECX participant, you may wish to make your service available on the ECX platform for other partners or customers to connect to your services. These partners or customers will create connections to your services as a destination from their ports on the ECX (sometimes referred to as the origin of the connection). This is useful to monitor the number of connections on existing ports and the amount of bandwidth consumed by these connections.",
+                "operationId": "getSellerConnectionsUsingGET",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Specify the OAuth Bearer token with prefix 'Bearer '.",
+                        "required": true,
+                        "type": "string",
+                        "x-prefix": "Bearer "
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "connection status",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "PROVISIONED",
+                                "PENDING_APPROVAL",
+                                "PROVISIONING",
+                                "ORDERING",
+                                "REJECTED",
+                                "APPROVED",
+                                "PENDING_DEPROVISIONING",
+                                "PENDING_DELETE",
+                                "DELETED",
+                                "NOT_PROVISIONED",
+                                "MIGRATION_STARTED",
+                                "MIGRATION_DEPROVISIONED",
+                                "MIGRATION_DEPROVISION_FAILED",
+                                "MIGRATION_VLAN_RELEASED",
+                                "MIGRATION_VLAN_RELEASE_FAILED",
+                                "MIGRATION_VLAN_GENERATED",
+                                "MIGRATION_VLAN_GENERATION_FAILED",
+                                "MIGRATION_PROVISION_FAILED"
+                            ]
+                        },
+                        "collectionFormat": "multi",
+                        "enum": [
+                            "PROVISIONED",
+                            "PENDING_APPROVAL",
+                            "PROVISIONING",
+                            "ORDERING",
+                            "REJECTED",
+                            "APPROVED",
+                            "PENDING_DEPROVISIONING",
+                            "PENDING_DELETE",
+                            "DELETED",
+                            "NOT_PROVISIONED",
+                            "MIGRATION_STARTED",
+                            "MIGRATION_DEPROVISIONED",
+                            "MIGRATION_DEPROVISION_FAILED",
+                            "MIGRATION_VLAN_RELEASED",
+                            "MIGRATION_VLAN_RELEASE_FAILED",
+                            "MIGRATION_VLAN_GENERATED",
+                            "MIGRATION_VLAN_GENERATION_FAILED",
+                            "MIGRATION_PROVISION_FAILED"
+                        ]
+                    },
+                    {
+                        "name": "metroCode",
+                        "in": "query",
+                        "description": "Seller metro code",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "portName",
+                        "in": "query",
+                        "description": "Seller port name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "Seller connection status",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "profileId",
+                        "in": "query",
+                        "description": "Seller service profile id",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pageNumber",
+                        "in": "query",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "total number of records",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/GetSellerCOnResp"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponseArray"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "EnabledFeaturesModel": {
+            "type": "object",
+            "properties": {
+                "cloudReach": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "GetOptionalNetworkService": {
+            "type": "object",
+            "properties": {
+                "biForwardDetection": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "customerProvidedPeeringIp": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "dedicatedSubscriptionUuid": {
+                    "type": "string",
+                    "example": " "
+                },
+                "policer": {
+                    "$ref": "#/definitions/Policer"
+                }
+            }
+        },
+        "Policer": {
+            "type": "object",
+            "properties": {
+                "speed": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 200
+                },
+                "unit": {
+                    "type": "string",
+                    "example": "MB"
+                }
+            }
+        },
+        "ConnectorExistenceResponse": {
+            "type": "object",
+            "properties": {
+                "exist": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "IncomingSubscription": {
+            "type": "object",
+            "properties": {
+                "companyName": {
+                    "type": "string",
+                    "example": "Equinix"
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2018-03-20T16:01:40.614Z"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2018-03-20T16:06:16.442Z"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "PM-SFDC-RESTRICTIVE-A to PAE-TEST-RESTRICTIVE-A"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/RIIncomingSubOptionalNetwork"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "PROVISIONED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "xxx9fxxx-xxxx-4c3c-xxxx-xxx801cxxxxx"
+                }
+            }
+        },
+        "RIIncomingSubOptionalNetwork": {
+            "type": "object",
+            "properties": {
+                "policerSpeedValue": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "policerSpeedUnit": {
+                    "type": "string",
+                    "example": "MB"
+                },
+                "isEqxEnforcedNat": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "isPerformNat": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "isCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "natEqAddress": {
+                    "type": "string",
+                    "example": "64.191.252.144/31,64.191.252.146/31"
+                },
+                "dedicatedConnectorName": {
+                    "type": "string",
+                    "example": "PM-SFDC-RESTRICTIVE-A to Equinix_SVC-SE3-CX-PRI-01"
+                },
+                "dedicatedConnectorUuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-1fac-11e7-b279-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "ConnectorCreateResponse": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-1fac-11e7-b279-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "RoutingInstanceCreateResponse": {
+            "type": "object",
+            "properties": {
+                "primaryRIUuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-1fac-11e7-b279-xxxxxxxxxxxx"
+                },
+                "secondaryRIUuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-1fac-11e7-b279-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "Throwable": {
+            "type": "object",
+            "properties": {
+                "cause": {
+                    "$ref": "#/definitions/Throwable"
+                },
+                "localizedMessage": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "stackTrace": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StackTraceElement"
+                    }
+                },
+                "suppressed": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Throwable"
+                    }
+                }
+            }
+        },
+        "GetRoutingInstancesResponse": {
+            "type": "object",
+            "properties": {
+                "pageNumber": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 87
+                },
+                "routingInstances": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoutingInstancev3"
+                    }
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 87
+                }
+            }
+        },
+        "OptionalNetworkService": {
+            "type": "object",
+            "properties": {
+                "biForwardDetection": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "policer": {
+                    "$ref": "#/definitions/Policer"
+                }
+            }
+        },
+        "OutGoingSubscription": {
+            "type": "object",
+            "properties": {
+                "companyName": {
+                    "type": "string",
+                    "example": "SVC TEST GLOBAL"
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2017-10-20T14:48:13.303Z"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2017-10-20T15:19:48.000Z"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "RI-TEST_PNI_POC_CUST to RI-DC_TEST-SELLER-L3"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/RIOutSubOptionalNetwork"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "DELETED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "RIOutSubOptionalNetwork": {
+            "type": "object",
+            "properties": {
+                "policerSpeedValue": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "policerSpeedUnit": {
+                    "type": "string",
+                    "example": "MB"
+                },
+                "isEqxEnforcedNat": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "isPerformNat": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "isCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "natEqAddress": {
+                    "type": "string",
+                    "example": "198.32.102.8/31,198.32.102.10/31"
+                },
+                "dedicatedConnectorName": {
+                    "type": "string",
+                    "example": "RI-TEST_PNI_POC_TEST to RI-DC_TEST-SELLER-L3"
+                },
+                "dedicatedConnectorUuid": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "ConnectorModel": {
+            "type": "object",
+            "properties": {
+                "bgpIpSubnetSize": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 31
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "Test"
+                },
+                "createdByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdByFullName": {
+                    "type": "string",
+                    "example": "reg-003 01"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2018-01-12T00:16:41.571Z"
+                },
+                "ctag": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 46
+                },
+                "customerAsn": {
+                    "type": "string",
+                    "example": "777"
+                },
+                "customerBgpPeeringIp": {
+                    "type": "string",
+                    "example": "67.223.181.73"
+                },
+                "equinixAsn": {
+                    "type": "string",
+                    "example": "25658"
+                },
+                "equinixBgpPeeringIp": {
+                    "type": "string",
+                    "example": "67.223.181.72"
+                },
+                "isLastConnectorOnRI": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "isTagged": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "test"
+                },
+                "lastUpdatedByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedByFullName": {
+                    "type": "string",
+                    "example": "01"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2018-01-12T00:16:44.126Z"
+                },
+                "metroCode": {
+                    "type": "string",
+                    "example": "SV"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "test-reg-sv-1"
+                },
+                "notificationEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "optionalNetworkService": {
+                    "$ref": "#/definitions/GetOptionalNetworkService"
+                },
+                "portName": {
+                    "type": "string",
+                    "example": "TES-003-CX-SV1-L-QinQ-TES-PRI-1G-17"
+                },
+                "portUuid": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                },
+                "riName": {
+                    "type": "string",
+                    "example": "test-reg-sv-1"
+                },
+                "riUuid": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                },
+                "stag": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 45
+                },
+                "state": {
+                    "type": "string",
+                    "example": "PROVISIONED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                },
+                "version": {
+                    "type": "string",
+                    "example": "Fri Apr 13 05:31:37 GMT 2018"
+                }
+            }
+        },
+        "RoutingInstanceExistenceResponse": {
+            "type": "object",
+            "properties": {
+                "exist": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "StackTraceElement": {
+            "type": "object",
+            "properties": {
+                "className": {
+                    "type": "string"
+                },
+                "fileName": {
+                    "type": "string"
+                },
+                "lineNumber": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "methodName": {
+                    "type": "string"
+                },
+                "nativeMethod": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "GETServiceProfileModelv3": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxxx-7f7c-487e-9c12-xxxxxxxx866f"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "L3_PROFILE_NON_CLOUDREACH"
+                },
+                "authKeyLabel": {
+                    "type": "string",
+                    "example": "Authorization ID"
+                },
+                "features": {
+                    "$ref": "#/definitions/enabledFeatures"
+                },
+                "allowCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "speedBands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SpeedBand"
+                    }
+                },
+                "onProfileApprovalRejectNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "metadata": {
+                    "type": "string",
+                    "example": null
+                },
+                "additionalInfo": {
+                    "$ref": "#/definitions/AdditionalInfoModel"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/OptionalNetworkServiceModel"
+                },
+                "routingInstanceDetails": {
+                    "$ref": "#/definitions/routingInstanceDetailsv3"
+                },
+                "activeSubscriptions": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "description": {
+                    "type": "string",
+                    "example": "L3_PROFILE_NON_CLOUDREACH1"
+                },
+                "source": {
+                    "type": "string",
+                    "example": "ECX_PORTAL"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "DELETED"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2018-04-13T05:20:57.238Z"
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "createdByFullName": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "createdByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2018-04-13T18:15:58.114Z"
+                },
+                "lastUpdatedByFullName": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "lastUpdatedByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "companyName": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                }
+            }
+        },
+        "PutServiceProfileModelv3": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "routingInstanceDetailsv3": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "RI-TEST-SV-ad"
+                },
+                "sellerRegion": {
+                    "type": "string",
+                    "example": ""
+                },
+                "metro": {
+                    "type": "string",
+                    "example": "SV"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "PROVISIONED"
+                }
+            }
+        },
+        "routingInstanceDetailsv31": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "b2dbxxxx-xxxx-11xx-b3xx-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "enabledFeatures": {
+            "type": "object",
+            "properties": {
+                "cloudReach": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "ServiceProfileModelv3": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "L3_PROFILE_NON_CLOUDREACH"
+                },
+                "statusForDisplay": {
+                    "type": "string",
+                    "example": ""
+                },
+                "serviceType": {
+                    "type": "string",
+                    "example": "CSCL3RI"
+                },
+                "authKeyLabel": {
+                    "type": "string",
+                    "example": "Authorization ID"
+                },
+                "features": {
+                    "$ref": "#/definitions/EnabledFeaturesModel"
+                },
+                "allowCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "speedBands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SpeedBand"
+                    }
+                },
+                "onProfileApprovalRejectNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "additionalInfo": {
+                    "$ref": "#/definitions/AdditionalInfoModel"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/optionalNetworkServicesv3"
+                },
+                "routingInstanceDetails": {
+                    "$ref": "#/definitions/routingInstanceDetailsv31"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "L3_PROFILE_NON_CLOUDREACH1"
+                }
+            }
+        },
+        "optionalNetworkServicesv3": {
+            "type": "object",
+            "properties": {
+                "filterIncomingRoutes": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "OptionalNetworkServiceModel": {
+            "type": "object",
+            "properties": {
+                "equinixRoutesNetworkPrefixSize": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 24
+                },
+                "filterIncomingRoutes": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "RiServiceProfileOptionalNetwork": {
+            "type": "object",
+            "properties": {
+                "equinixRoutesNetworkPrefixSize": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "filterIncomingRoutes": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "RiServiceProfile": {
+            "type": "object",
+            "properties": {
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2017-09-13T16:26:02.000Z"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2017-09-18T21:37:02.000Z"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "RI-DC_TEST-SELLER-L3"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/RiServiceProfileOptionalNetwork"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "DELETED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-297f-11e8-8ad1-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "GetConnectorsResponse": {
+            "type": "object",
+            "properties": {
+                "connectors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConnectorModel"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 8
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 8
+                }
+            }
+        },
+        "AdditionalInfoModel": {
+            "type": "object",
+            "properties": {
+                "bgpCommunityTagUrl": {
+                    "type": "string",
+                    "example": "test"
+                },
+                "inTrialMetros": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": []
+                    }
+                }
+            }
+        },
+        "RoutingInstanceUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "TEST-2-SV-edit"
+                },
+                "notificationEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                }
+            }
+        },
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errorCode": {
+                    "type": "string",
+                    "example": "ErrorCode"
+                },
+                "errorMessage": {
+                    "type": "string",
+                    "example": "Error message"
+                },
+                "moreInfo": {
+                    "type": "string",
+                    "example": "More Info"
+                },
+                "property": {
+                    "type": "string",
+                    "example": "Property"
+                }
+            }
+        },
+        "ErrorResponseArray": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ErrorResponse"
+            }
+        },
+        "RoutingInstancev3": {
+            "type": "object",
+            "properties": {
+                "state": {
+                    "type": "string",
+                    "example": "PROVISIONED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-1fac-11e7-b279-xxxxxxxxxxxx"
+                },
+                "asn": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 8075
+                },
+                "bgpAuthorizationKey": {
+                    "type": "string",
+                    "example": "4567 "
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdByFullName": {
+                    "type": "string",
+                    "example": "Sandbox User"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2017-04-12T18:20:57.546Z"
+                },
+                "equinixAsn": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 31425
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedByFullName": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2017-04-12T11:21:17.000Z"
+                },
+                "metroCode": {
+                    "type": "string",
+                    "example": "DC"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "TEST-SEC-DC"
+                },
+                "notificationEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "routeType": {
+                    "type": "string",
+                    "example": "Public"
+                },
+                "optionalNetworkService": {
+                    "$ref": "#/definitions/RIOptionalNetwork"
+                },
+                "connectors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RiConnector"
+                    }
+                },
+                "incomingSubscriptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IncomingSubscription"
+                    }
+                },
+                "outgoingSubscriptions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OutGoingSubscription"
+                    }
+                },
+                "serviceProfiles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RiServiceProfile"
+                    }
+                }
+            }
+        },
+        "RIOptionalNetwork": {
+            "type": "object",
+            "properties": {
+                "filter_incoming_routes": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "seller_config": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "prefix_size": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "cm_metros": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": [
+                            "DA",
+                            "DC"
+                        ]
+                    }
+                }
+            }
+        },
+        "RiConnector": {
+            "type": "object",
+            "properties": {
+                "createdBy": {
+                    "type": "string",
+                    "example": "test-us"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2017-08-24T07:50:48.005Z"
+                },
+                "ctag": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 0
+                },
+                "device": {
+                    "type": "string",
+                    "example": "xxxxxE657Cxxxxxxxxxx13897896xxxx"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2018-03-28T23:25:28.934Z"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "RI-12-CH-BUYER-TEST to TEST-CH2-CX-TEs-02"
+                },
+                "portName": {
+                    "type": "string",
+                    "example": "TEST-CH2-CX-TES-02"
+                },
+                "stag": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 10
+                },
+                "state": {
+                    "type": "string",
+                    "example": "DELETED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-88a0-11e7-b893-xxxxxxxxxxxx"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/RIConnectorOptionalNetwork"
+                }
+            }
+        },
+        "RIConnectorOptionalNetwork": {
+            "type": "object",
+            "properties": {
+                "biForwardDetection": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "isUserProvidedPeeringIp": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "policerSpeedValue": {
+                    "type": "number",
+                    "example": 0
+                },
+                "dedicatedSubscriptionUuid": {
+                    "type": "string",
+                    "example": ""
+                },
+                "customerBgpPeeringIp": {
+                    "type": "string",
+                    "example": "67.223.180.59"
+                },
+                "policerSpeedUnit": {
+                    "type": "string",
+                    "example": " "
+                },
+                "equinixBgpPeeringIp": {
+                    "type": "number",
+                    "example": "67.223.180.58"
+                },
+                "dedicatedSubscriptionName": {
+                    "type": "string",
+                    "example": " "
+                },
+                "bgpIpSubnetSize": {
+                    "type": "number",
+                    "example": 31
+                }
+            }
+        },
+        "SpeedBand": {
+            "type": "object",
+            "properties": {
+                "speed": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 0
+                },
+                "unit": {
+                    "type": "string",
+                    "example": "MB"
+                }
+            }
+        },
+        "ProfileModel": {
+            "type": "object",
+            "properties": {
+                "additionalBuyerInfo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AdditionalBuyerInfo"
+                    }
+                },
+                "alertPercentage": {
+                    "type": "number",
+                    "format": "double",
+                    "example": 10
+                },
+                "allowCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "apiAvailable": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "authKeyLabel": {
+                    "type": "string",
+                    "example": "Authorization Key",
+                    "description": "specify the authenticaion key label that will be shown while creating connection"
+                },
+                "connectionAccessibility": {
+                    "type": "string",
+                    "example": "HYBRID",
+                    "enum": [
+                        "PUBLIC",
+                        "PRIVATE",
+                        "HYBRID"
+                    ]
+                },
+                "connectionNameLabel": {
+                    "type": "string",
+                    "example": "Connection Names",
+                    "description": "specify the aConnection Names label that will be shown while creating connection"
+                },
+                "ctagLabel": {
+                    "type": "string",
+                    "example": "C-Tag"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "this profile is test profile example"
+                },
+                "equinixManagedPortAndVlan": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "specify if profile is equinix managed or not"
+                },
+                "features": {
+                    "$ref": "#/definitions/EnabledFeatures"
+                },
+                "integrationId": {
+                    "type": "string",
+                    "example": "34254"
+                },
+                "namedTags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PortDetail"
+                    }
+                },
+                "private": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "requiredRedundancy": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "spacify if the redundancy of the connection required or not"
+                },
+                "speedBands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SpeedBand"
+                    }
+                },
+                "speedFromAPI": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "tagType": {
+                    "type": "string",
+                    "example": "BOTH",
+                    "enum": [
+                        "CTAGED",
+                        "BOTH",
+                        "NAMED"
+                    ]
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxx02e-c2f9-xxxx-xxxx-9fba9e7xxxxx",
+                    "description": "need only in case of update"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "vlanSameAsPrimary": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "specify if vlan is same as primary or not"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "ServiceProfileNoDuplicateName",
+                    "description": "name of service profile"
+                },
+                "onBandwidthThresholdNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "sandboxuser@examplecompany.com"
+                        ]
+                    }
+                },
+                "onProfileApprovalRejectNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "sandboxuser@examplecompany.com"
+                        ]
+                    }
+                },
+                "onVcApprovalRejectionNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "test@test.com"
+                        ]
+                    }
+                },
+                "privateUserEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "sandboxuser@examplecompany.com"
+                        ]
+                    }
+                }
+            }
+        },
+        "AdditionalBuyerInfo": {
+            "type": "object",
+            "properties": {
+                "captureInEmail": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "datatype": {
+                    "type": "string",
+                    "example": "STRING",
+                    "enum": [
+                        "INTEGER",
+                        "BOOLEAN",
+                        "LONG",
+                        "FLOAT",
+                        "DOUBLE",
+                        "STRING"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "example": "custBGPAssn description"
+                },
+                "mandatory": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "name": {
+                    "type": "string",
+                    "example": "custBGPAssn"
+                }
+            }
+        },
+        "EnabledFeatures": {
+            "type": "object",
+            "properties": {
+                "cloudReach": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "testProfile": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "PortDetail": {
+            "type": "object",
+            "properties": {
+                "crossConnectId": {
+                    "type": "string",
+                    "example": "xyz:crossConnect:ws36onof3dbxv4bfywjy52u"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "5E89B4A3FxxxxxxxxxxxxACC88C08A35"
+                },
+                "inTrail": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "metroCode": {
+                    "type": "string",
+                    "example": "SV"
+                },
+                "sellerRegion": {
+                    "type": "string",
+                    "example": "us-east-1"
+                },
+                "sellerRegionDescription": {
+                    "type": "string",
+                    "example": "Added for AWS"
+                },
+                "xa": {
+                    "type": "object"
+                }
+            }
+        },
+        "ValidateIntegrationIdResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Example company API integration"
+                },
+                "metadata": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Metadata"
+                    }
+                },
+                "redundancy": {
+                    "type": "string",
+                    "example": "SINGLE"
+                },
+                "sellerRegions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/EquinixRegion"
+                    }
+                },
+                "state": {
+                    "type": "string",
+                    "example": "VALID"
+                }
+            }
+        },
+        "Metadata": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "example": "crossconnect"
+                },
+                "value": {
+                    "type": "string",
+                    "example": "true"
+                }
+            }
+        },
+        "EquinixRegion": {
+            "type": "object",
+            "properties": {
+                "interconnectionRegion": {
+                    "type": "string"
+                },
+                "regionData": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SellerRegion"
+                    }
+                }
+            }
+        },
+        "SellerRegion": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Phoenix region obmc"
+                },
+                "key": {
+                    "type": "string",
+                    "example": "us-phoenix-1"
+                }
+            }
+        },
+        "MetaDataV2": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "example": ""
+                },
+                "value": {
+                    "type": "string",
+                    "example": ""
+                }
+            }
+        },
+        "GetServiceProfileL3Response": {
+            "type": "object",
+            "properties": {
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "content": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GETServiceProfileModelv3"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "isLastPage": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "isFirstPage": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "ServiceProfilesCreateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "L3_PROFILE_NON_CLOUDREACH"
+                },
+                "statusForDisplay": {
+                    "type": "string",
+                    "example": ""
+                },
+                "serviceType": {
+                    "type": "string",
+                    "example": "CSCL3RI"
+                },
+                "authKeyLabel": {
+                    "type": "string",
+                    "example": "Authorization ID"
+                },
+                "features": {
+                    "$ref": "#/definitions/EnabledFeaturesModel"
+                },
+                "allowCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "speedBands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SpeedBand"
+                    }
+                },
+                "onProfileApprovalRejectNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "additionalInfo": {
+                    "$ref": "#/definitions/AdditionalInfoModel"
+                },
+                "optionalNetworkServices": {
+                    "$ref": "#/definitions/optionalNetworkServicesv3"
+                },
+                "routingInstanceDetails": {
+                    "$ref": "#/definitions/routingInstanceDetailsv3"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "L3_PROFILE_NON_CLOUDREACH1"
+                }
+            }
+        },
+        "ServiceProfilesCreateResponse": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-9b29-4832-9524-xxxxxxxxxxxx"
+                }
+            }
+        },
+        "RoutingInstanceCreateRequest": {
+            "type": "object",
+            "properties": {
+                "asn": {
+                    "type": "integer",
+                    "example": 34
+                },
+                "primaryRIName": {
+                    "type": "string",
+                    "example": "TEST-1-SV"
+                },
+                "secondaryRIName": {
+                    "type": "string",
+                    "example": "TEST-2-SV"
+                },
+                "bgpAuthorizationKey": {
+                    "type": "string",
+                    "example": "xxx"
+                },
+                "routeType": {
+                    "type": "string",
+                    "example": "Public"
+                },
+                "metroCode": {
+                    "type": "string",
+                    "example": "SV"
+                },
+                "notificationEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                }
+            }
+        },
+        "ConnectorCreateRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "RI-2-SV-TEST to TEST-CX-SV1-NL-QinQ-TES-PRI-1G-69"
+                },
+                "riUuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-5b94-4d6e-934b-xxxxxxxxxxxx"
+                },
+                "portUuid": {
+                    "type": "integer",
+                    "example": "xxxxxxxx-1f36-f360-98e0-xxxxxxxxxxxx"
+                },
+                "isTagged": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "stag": {
+                    "type": "integer",
+                    "example": 23
+                },
+                "ctag": {
+                    "type": "integer",
+                    "example": 32
+                },
+                "notificationEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "OptionalNetworkService": {
+                    "type": "object",
+                    "properties": {
+                        "biForwardDetection": {
+                            "type": "boolean",
+                            "example": true
+                        },
+                        "policer": {
+                            "$ref": "#/definitions/Policer"
+                        }
+                    }
+                }
+            }
+        },
+        "GeneralErrorMessage": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/GeneralErrorMessageDetail"
+            }
+        },
+        "GeneralErrorMessageDetail": {
+            "type": "object",
+            "properties": {
+                "errorCode": {
+                    "type": "string",
+                    "example": "ERROR-CODE"
+                },
+                "errorMessage": {
+                    "type": "string",
+                    "example": "ERROR-MESSAGE"
+                },
+                "moreInfo": {
+                    "type": "string",
+                    "example": "MORE-INFO"
+                },
+                "property": {
+                    "type": "string",
+                    "example": "PROPERTY"
+                }
+            }
+        },
+        "ConnectorUpdateModel": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "TEST-11-SV-ad to TES-003-CX-SV1-L-Dot1q-TES-PRI-1G-21-edit"
+                },
+                "notificationEmails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "optionalNetworkService": {
+                    "$ref": "#/definitions/OptionalNetworkService"
+                }
+            }
+        },
+        "GETCommonMetroResp": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Amsterdam"
+                },
+                "code": {
+                    "type": "string",
+                    "example": "AM"
+                },
+                "region": {
+                    "type": "string",
+                    "example": "EMEA"
+                },
+                "cloudReach": {
+                    "example": [
+                        "LD",
+                        "FR",
+                        "PA",
+                        "DB",
+                        "SK",
+                        "ZH",
+                        "HE",
+                        "ML"
+                    ]
+                }
+            }
+        },
+        "GetServiceprofilesResp": {
+            "type": "object",
+            "properties": {
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                },
+                "content": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GetServiceprofilesResContent"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "isLastPage": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "isFirstPage": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "GetServiceprofilesResContent": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "xxxxxxxx-cdaa-44e7-bd36-xxxxxxxxxxxx"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Oracle Cloud Infrastructure -OCI- FastConnect"
+                },
+                "requiredRedundancy": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "authKeyLabel": {
+                    "type": "string",
+                    "example": "Virtual Circuit OCID"
+                },
+                "connectionNameLabel": {
+                    "type": "string",
+                    "example": "Example company Virtual Circuit"
+                },
+                "equinixManagedPortAndVlan": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "integrationId": {
+                    "type": "string",
+                    "example": "Example-company-CrossConnect-01"
+                },
+                "apiAvailable": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "vlanSameAsPrimary": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "tagType": {
+                    "type": "string",
+                    "example": "CTAGED"
+                },
+                "ctagLabel": {
+                    "type": "string",
+                    "example": "Seller-Side C-Tag"
+                },
+                "namedTags": {
+                    "$ref": "#/definitions/GetServiceprofilesResContentNamedTags"
+                },
+                "alertPercentage": {
+                    "type": "integer",
+                    "example": 50
+                },
+                "onProfileApprovalRejectNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com, sandboxuser1@examplecompany.com"
+                    }
+                },
+                "onBandwidthThresholdNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com, sandboxuser1@examplecompany.com"
+                    }
+                },
+                "onVcApprovalRejectionNotification": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com, sandboxuser1@examplecompany.com"
+                    }
+                },
+                "ports": {
+                    "$ref": "#/definitions/PortDetail"
+                },
+                "allowCustomSpeed": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "speedFromAPI": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "connectionAccessibility": {
+                    "type": "string",
+                    "example": "HYBRID"
+                },
+                "speedBands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SpeedBand"
+                    }
+                },
+                "description": {
+                    "type": "string",
+                    "example": "<p>12</p>"
+                },
+                "authorizationKey": {
+                    "type": "string",
+                    "example": ""
+                },
+                "state": {
+                    "type": "string",
+                    "example": "APPROVED"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2017-05-09T08:28:02Z"
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2018-04-03T20:28:43.911Z"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser2@examplecompany.com2"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/GetSErvProfRespContentMetadata"
+                },
+                "createdByFullName": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "lastUpdatedByFullName": {
+                    "type": "string",
+                    "example": "sandboxuser"
+                },
+                "createdByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser2@examplecompany.com"
+                },
+                "updatedByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser2@examplecompany.com"
+                },
+                "globalOrganization": {
+                    "type": "string",
+                    "example": "Example provider"
+                },
+                "organizationName": {
+                    "type": "string",
+                    "example": "oracle Public Cloud Group "
+                },
+                "private": {
+                    "type": "boolean"
+                },
+                "features": {
+                    "$ref": "#/definitions/GetservProfResContentFeatures"
+                }
+            }
+        },
+        "GetServiceprofilesResContentNamedTags": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "example": "-Microsoft -Public -Private"
+            }
+        },
+        "GetSErvProfRespContentMetadata": {
+            "type": "object",
+            "properties": {
+                "is_release_vlan": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "limit_auth_key_conn": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "GetservProfResContentFeatures": {
+            "type": "object",
+            "properties": {
+                "cloudReach": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "testProfile": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "PostServiceprofilesResponse": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "PutServiceprofilesResponse": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "ecf3b154-xxxx-4b30-xxxx-219xxxx400a0"
+                }
+            }
+        },
+        "OAuthRequest": {
+            "type": "object",
+            "properties": {
+                "grant_type": {
+                    "type": "string",
+                    "example": "client_credentials"
+                },
+                "user_name": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "user_password": {
+                    "type": "string",
+                    "example": "password"
+                },
+                "client_id": {
+                    "type": "string",
+                    "example": "xxxxxwNHOTkxxxxxuwqWtxxxxIfB3Qyw"
+                },
+                "client_secret": {
+                    "type": "string",
+                    "example": "xxxxxxqxxxxx3uGy"
+                }
+            }
+        },
+        "OAuthErrorResponse": {
+            "type": "object",
+            "properties": {
+                "errorDomain": {
+                    "type": "string",
+                    "example": "apps-fqa"
+                },
+                "errorTitle": {
+                    "type": "string",
+                    "example": "Invalid Username/Password"
+                },
+                "errorCode": {
+                    "type": "string",
+                    "example": "S1003"
+                },
+                "developerMessage": {
+                    "type": "string",
+                    "example": "Invalid Username/Password"
+                },
+                "errorMessage": {
+                    "type": "string",
+                    "example": "We didn't recognize the username or password you entered. Please try again.."
+                }
+            }
+        },
+        "OAuthResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string",
+                    "example": "PgJwBdSitwxxxxxxR8yZ6xxxxx"
+                },
+                "token_timeout": {
+                    "type": "integer",
+                    "example": 3599
+                },
+                "user_name": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.COM"
+                },
+                "token_type": {
+                    "type": "string",
+                    "example": "Bearer"
+                },
+                "refresh_token": {
+                    "type": "string",
+                    "example": "20t1Qbxxxxx86HsyseyiCxxxxxxxYWcgtaFuxxxxxx"
+                },
+                "refresh_token_timeout": {
+                    "type": "string",
+                    "example": 5182560
+                }
+            }
+        },
+        "GetSellerCOnResp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GetsellerConResContent"
+                    }
+                },
+                "isFirstPage": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "isLastPage": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "pageNumber": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "totalCount": {
+                    "type": "integer",
+                    "example": 210
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 20
+                }
+            }
+        },
+        "GetsellerConResContent": {
+            "type": "object",
+            "properties": {
+                "asideEncapsulation": {
+                    "type": "string",
+                    "example": "qinq"
+                },
+                "authorizationKey": {
+                    "type": "string",
+                    "example": "xxxxxxxx-xxxx-43a0-xxxx-xxxxxxxxxxxx"
+                },
+                "billingTier": {
+                    "type": "string",
+                    "example": "Up to 50 MB"
+                },
+                "buyerOrganizationName": {
+                    "type": "string",
+                    "example": "Example Organisation"
+                },
+                "createdBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "createdByFullName": {
+                    "type": "string",
+                    "example": "sandbox user"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2018-04-03T14:53:42.603Z"
+                },
+                "deletedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "deletedByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "deletedDate": {
+                    "type": "string",
+                    "example": "2018-04-03T14:54:16.185Z"
+                },
+                "lastUpdatedBy": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedByEmail": {
+                    "type": "string",
+                    "example": "sandboxuser@examplecompany.com"
+                },
+                "lastUpdatedByFullName": {
+                    "type": "string",
+                    "example": "sandbox user"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2018-04-03T14:53:42.603Z"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/GetsellerConResContentMetadata"
+                },
+                "metroCode": {
+                    "type": "string",
+                    "example": "LD"
+                },
+                "metroDescription": {
+                    "type": "string",
+                    "example": "London"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "TEST"
+                },
+                "notifications": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                },
+                "portName": {
+                    "type": "string",
+                    "example": "EXAMPLECOMPANY-XXXX-CX-PRI-01"
+                },
+                "portUUID": {
+                    "type": "string",
+                    "example": "66284add-xxxx-1150-xxxx-xxxxxxxxxxxx"
+                },
+                "private": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "purchaseOrderNumber": {
+                    "type": "string",
+                    "example": "Test"
+                },
+                "redundancyType": {
+                    "type": "string",
+                    "example": "primary"
+                },
+                "remote": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "self": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "sellerMetroCode": {
+                    "type": "string",
+                    "example": "LD"
+                },
+                "sellerOrganizationName": {
+                    "type": "string",
+                    "example": "EXAMPLE-COMPANY-ECP-IXP-ETHERNET"
+                },
+                "sellerServiceName": {
+                    "type": "string",
+                    "example": "Managed Services"
+                },
+                "sellerServiceUUID": {
+                    "type": "string",
+                    "example": "53c4b828-xxxx-440b-xxxx-c74973d7c0dd"
+                },
+                "speed": {
+                    "type": "integer",
+                    "example": 50
+                },
+                "speedUnit": {
+                    "type": "string",
+                    "example": "MB"
+                },
+                "state": {
+                    "type": "string",
+                    "example": "NOT_AVAILABLE"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "DELETED"
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "52b8e097-xxxx-4a27-xxxx-xxxxxxxxxxxxx"
+                },
+                "vlanCTag": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 196
+                },
+                "vlanSTag": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 198
+                },
+                "redundantUUID": {
+                    "type": "string",
+                    "example": "ce7ac5f9-d8b9-xxxx-xxxxx-xxxxxxxxxxxxx"
+                }
+            }
+        },
+        "GetsellerConResContentMetadata": {
+            "type": "object",
+            "properties": {
+                "notification_emails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "example": "sandboxuser@examplecompany.com"
+                    }
+                }
+            }
+        },
+        "PatchRequest": {
+            "type": "object",
+            "properties": {
+                "primaryPortUUID": {
+                    "type": "string",
+                    "example": "62637774-xxxx-d580-xxxx-30ac1885134a"
+                },
+                "primaryVlanSTag": {
+                    "type": "string",
+                    "example": "89"
+                },
+                "primaryVlanCTag": {
+                    "type": "string",
+                    "example": "809"
+                },
+                "secondaryPortUUID": {
+                    "type": "string",
+                    "example": "62637774-xxxx-d540-xxxx-xxxxxxxxxxxxx"
+                },
+                "secondaryVlanSTag": {
+                    "type": "string",
+                    "example": "98"
+                },
+                "secondaryVlanCTag": {
+                    "type": "string",
+                    "example": "980"
+                },
+                "rejectComment": {
+                    "type": "string",
+                    "example": "rejected"
+                }
+            }
+        },
+        "DeleteServiceProfileResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "[698e6100-xxxx-48ee-xxxx-xxxxxxxxxxxxx] successfully deleted"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "SUCCESS"
+                }
+            }
+        },
+        "PatchConnectionresponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Successfully Approved"
+                },
+                "moreInfo": {
+                    "type": "string",
+                    "example": "Redundant connection also approved"
+                },
+                "primaryConnectionId": {
+                    "type": "string",
+                    "example": "7a09ad90-xxxx-4394-xxxx-xxxxxxxxxxxxx"
+                },
+                "secondaryConnectionId": {
+                    "type": "string",
+                    "example": "15490209-xxxx-4aeb-xxxx-xxxxxxxxxxxxx"
+                }
+            }
+        },
+        "UserPort": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/UserPortResObj"
+            }
+        },
+        "UserPortResObj": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "example": "99xyZabcd-xxxx-1234-xxxx-xxxxxxxxxxxxx"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "TEST-DC5-EX-PORT4"
+                },
+                "provisionStatus": {
+                    "type": "string",
+                    "example": "ADDED"
+                },
+                "region": {
+                    "type": "string",
+                    "example": "AMER"
+                },
+                "device": {
+                    "type": "string",
+                    "example": "XXXX"
+                },
+                "totalBandwidth": {
+                    "type": "integer",
+                    "example": 10000000000
+                },
+                "buyout": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "custOrgId": {
+                    "type": "string",
+                    "example": 7033
+                },
+                "ibx": {
+                    "type": "string",
+                    "example": "SV5"
+                },
+                "metroCode": {
+                    "type": "string",
+                    "example": "SV"
+                },
+                "metroDescription": {
+                    "type": "string",
+                    "example": "Sillicon Valley"
+                },
+                "deviceGroup": {
+                    "type": "string",
+                    "example": 1
+                },
+                "devicePriority": {
+                    "type": "string",
+                    "example": "Primary"
+                },
+                "encapsulation": {
+                    "type": "string",
+                    "example": "Dot1q"
+                },
+                "viewPortPermission": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "placeVcOrderPermission": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "createdDate": {
+                    "type": "string",
+                    "example": "2017-02-21T22:01:58.000Z"
+                },
+                "lastUpdatedDate": {
+                    "type": "string",
+                    "example": "2017-02-24T19:12:44.000Z"
+                },
+                "layer3Enabled": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "lag": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "userPorts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/userPortsObj"
+                    }
+                }
+            }
+        },
+        "userPortsObj": {
+            "type": "object",
+            "properties": {
+                "bandwidth": {
+                    "type": "integer",
+                    "example": 10000000000
+                },
+                "crossConnectId": {
+                    "type": "string",
+                    "example": 20466763
+                }
+            }
+        }
+    }
+}
