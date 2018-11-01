@@ -125,7 +125,7 @@ func NewValidateIntegrationIDUsingGETBadRequest() *ValidateIntegrationIDUsingGET
 Bad Request
 */
 type ValidateIntegrationIDUsingGETBadRequest struct {
-	Payload models.ErrorResponseArray
+	Payload *models.ErrorResponse
 }
 
 func (o *ValidateIntegrationIDUsingGETBadRequest) Error() string {
@@ -134,8 +134,10 @@ func (o *ValidateIntegrationIDUsingGETBadRequest) Error() string {
 
 func (o *ValidateIntegrationIDUsingGETBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.ErrorResponse)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

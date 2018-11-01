@@ -424,7 +424,7 @@
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponseArray"
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     },
                     "404": {
